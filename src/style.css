@@ -1,6 +1,39 @@
 :root {
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
   background-color: #1a1a1a;
+  font-size: large;
+}
+
+#alertbox {
+  position: fixed;
+  top: 1vw;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 10px 20px;
+  color: white;
+  border-radius: 5px;
+  font-size: 16px;
+  font-weight: bold;
+  text-align: center;
+  z-index: 1000;
+  transition: opacity 0.3s ease-in-out;
+}
+
+.hidden {
+  display: none;
+}
+
+.success {
+  background-color: #4CAF50;
+  color: white;
+  display: block;
+}
+
+.error {
+  background-color: #f44336;
+  color: white;
+  display: block;
 }
 
 body {

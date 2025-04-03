@@ -14,37 +14,64 @@ document.querySelector('#app').innerHTML = `
     <br/>
 
     <button id="btn">ok</button>
-    
+
+    <!-- Div para exibir alertas -->
+    <div id="alertbox" class="hidden"></div>
 
   </div>
 
-`; document.querySelector('#btn').addEventListener('click', () => {
+`;
+
+/**
+ * Adiciona um evento de clique ao botão para validar as coordenadas
+ */
+document.querySelector('#btn').addEventListener('click', () => {
+  /**
+   * Obtém os valores dos campos de entrada e os converte para números de ponto flutuante
+   * @type {number}
+   */
   const lat = parseFloat(document.querySelector('#lat').value);
+  
+  /** @type {number} */
   const lon = parseFloat(document.querySelector('#lon').value);
+  
+  /** @type {HTMLElement | null} */
   const alertbox = document.querySelector('#alertbox');
 
-  console.log(`latitude: ${lat}, longitude: ${lon}`)
+  console.log(`Latitude: ${lat}, Longitude: ${lon}`);
 
-  function showAlert (message, type){
+  /**
+   * Exibe um alerta estilizado no topo da tela.
+   * @param {string} message - Mensagem a ser exibida.
+   * @param {string} type - Tipo de alerta (ex: 'success' ou 'error').
+   */
+  function showAlert(message, type) {
+    if (!alertbox) return; // Garante que o elemento existe antes de manipulá-lo
     alertbox.textContent = message;
     alertbox.className = `alert ${type}`;
     setTimeout(() => {
       alertbox.className = 'hidden';
-    }, 4000);
+    }, 3000);
   }
 
-  if (isNaN(lat) || isNaN(lon)){
-    showAlert('❌latitude ou longitude inválida');
+  // Validação de entrada: verifica se os valores são números válidos
+  if (isNaN(lat) || isNaN(lon)) {
+    showAlert('Latitude ou longitude inválida!', 'error');
+    return;
   }
 
-  if(lat<=-90 || lat>=90){
-    showAlert('❌latitude inválida');
-    console.log('latitude inválida');
+  // Validação de latitude: deve estar entre -90 e 90
+  if (lat < -90 || lat > 90) {
+    showAlert('Latitude inválida! Deve estar entre -90 e 90.', 'error');
+    return;
   }
 
-  if(lon<=-180 || lon>=180){
-    showAlert('❌longitude inválida');
-    console.log('longitude inválida');
+  // Validação de longitude: deve estar entre -180 e 180
+  if (lon < -180 || lon > 180) {
+    showAlert('❌ Longitude inválida! Deve estar entre -180 e 180.', 'error');
+    return;
   }
 
-})
+  // Se todas as validações passarem, exibe um alerta de sucesso
+  showAlert('✅ Latitude e longitude válidas!', 'success');
+});
